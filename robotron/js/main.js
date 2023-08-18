@@ -1,9 +1,27 @@
-const robotron = document.querySelector("#robotron");
+// const subtrair = document.querySelector('#subtrair');
+// const somar = document.querySelector('#somar');
+// const braco = document.querySelector('#braco');
 
-robotron.addEventListener("click", (evento) => {
-    console.log(evento);
+const controle = document.querySelectorAll('.controle-ajuste');
+
+controle.forEach((elemento) => {
+    elemento.addEventListener('click', () => {
+        let equipamento = elemento.parentElement.getAttribute('id');
+        let operacao = elemento.getAttribute('id');
+
+        manipularDados(equipamento, operacao);
+    });
 });
 
-function dizerOi(nome) {
-    console.log("O Robotron foi clicado e disse oi, " + nome + "!");
+function manipularDados(equipamento, operacao) {
+    let componente = document.querySelector(`#${equipamento}`).querySelector('input');
+    let valor = componente.getAttribute('value');
+    
+    if (operacao === 'somar') {
+        valor = parseInt(valor) + 1;
+    } else {
+        valor = parseInt(valor) - 1;
+    }
+
+    componente.setAttribute('value', valor);
 }

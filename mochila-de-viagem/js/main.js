@@ -16,10 +16,22 @@ form.addEventListener('submit', (evento) => {
         nome: nome.value,
         quantidade: quantidade.value
     }
-    
-    criarElemento(itemAtual);
-    
-    itens.push(itemAtual);
+
+    const itemExistente = itens.find((item) => {
+        return item.nome === nome.value;
+    });
+
+    if (itemExistente) {
+        itemAtual.id = itemExistente.id;
+
+        atualizarElemento(itemAtual);
+        itens[itemExistente.id - 1] = itemAtual;
+    } else {
+        itemAtual.id = itens.length + 1;
+        
+        criarElemento(itemAtual);
+        itens.push(itemAtual);
+    }    
 
     localStorage.setItem('itens', JSON.stringify(itens));
     
@@ -33,9 +45,16 @@ function criarElemento(elemento) {
 
     const numeroItem = document.createElement('strong');
     numeroItem.innerHTML = elemento.quantidade;
+    numeroItem.dataset.id = elemento.id;
 
     novoItem.appendChild(numeroItem);
+
     novoItem.innerHTML += elemento.nome;
 
     lista.appendChild(novoItem);
+}
+
+function atualizarElemento(elemento) {
+    const numeroItem = document.querySelector(`[data-id="${elemento.id}"]`);
+    numeroItem.innerHTML = elemento.quantidade;
 }

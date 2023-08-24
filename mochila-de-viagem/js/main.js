@@ -25,9 +25,9 @@ form.addEventListener('submit', (evento) => {
         itemAtual.id = itemExistente.id;
 
         atualizarElemento(itemAtual);
-        itens[itemExistente.id - 1] = itemAtual;
+        itens[itens.findIndex(item => item.id === itemExistente.id)] = itemAtual;
     } else {
-        itemAtual.id = itens.length + 1;
+        itemAtual.id = itens[itens.length - 1] ? (itens[itens.length - 1]).id + 1 : 1;
         
         criarElemento(itemAtual);
         itens.push(itemAtual);
@@ -48,8 +48,9 @@ function criarElemento(elemento) {
     numeroItem.dataset.id = elemento.id;
 
     novoItem.appendChild(numeroItem);
-
     novoItem.innerHTML += elemento.nome;
+
+    novoItem.appendChild(botaoApagar(elemento.id));
 
     lista.appendChild(novoItem);
 }
@@ -57,4 +58,21 @@ function criarElemento(elemento) {
 function atualizarElemento(elemento) {
     const numeroItem = document.querySelector(`[data-id="${elemento.id}"]`);
     numeroItem.innerHTML = elemento.quantidade;
+}
+
+function apagarElemento(elemento, id) {
+    elemento.remove();
+    itens.splice(itens.findIndex(item => item.id === id), 1);
+    localStorage.setItem('itens', JSON.stringify(itens));
+}
+
+function botaoApagar(id) {
+    const botao = document.createElement('button');
+    botao.innerHTML = 'X';
+
+    botao.addEventListener('click', function() {
+        apagarElemento(this.parentNode, id);
+    });
+
+    return botao;
 }

@@ -23,6 +23,11 @@ h1 {
     font-size: 5em;
 }
 
+h2 {
+    font-size: 4em;
+    margin-top: 20px;
+}
+
 h3 {
     font-size: 2em;
     margin-top: 20px;
@@ -39,4 +44,12 @@ h3 {
     font-size: 4em;
     padding: 10px;
     margin: 20px;
+}
+
+.btn-jogar {
+    border: none;
+    border-radius: 5px;
+    background: var(--primary-color);
+    padding: 8px 15px;
+    margin-top: 20px;
 }

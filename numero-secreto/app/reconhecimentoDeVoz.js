@@ -10,6 +10,7 @@ recognition.addEventListener('result', onSpeak);
 function onSpeak(e) {
     chute = e.results[0][0].transcript;
     exibirChute(chute);
+    verificarSeChutePossuiValorValido(chute);
 }
 
 function exibirChute(chute) {
@@ -17,3 +18,5 @@ function exibirChute(chute) {
         <div>Você disse</div>
         <span class="box">${chute}</span>`;
 }
+
+recognition.addEventListener('end', () => recognition.start());
